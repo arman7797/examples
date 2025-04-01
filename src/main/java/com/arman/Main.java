@@ -98,10 +98,7 @@ public class Main {
         };
 
         SOLUTION.searchMatrix(searchMatrix, 11);
-
-
         SOLUTION.nextGreaterElement(new int[]{5, 9, 2, 4, 8});
-
         SOLUTION.threeSum(new int[]{-1, 0, 1, 2, -1, -4});
         SOLUTION.threeSum(new int[]{0, 0, 0});
         SOLUTION.threeSum(new int[]{0, 1, 1});
