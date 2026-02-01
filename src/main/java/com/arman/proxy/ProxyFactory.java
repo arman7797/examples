@@ -1,5 +1,6 @@
 package com.arman.proxy;
 
+import com.arman.impl.LoggerInterceptor;
 import com.arman.proxy.async.AsyncInterceptor;
 import com.arman.proxy.interceptor.InvocationInterceptor;
 
@@ -11,13 +12,22 @@ import java.util.List;
 public class ProxyFactory {
     private final ProxyProperties props;
 
+    public ProxyFactory() {
+        this(ProxyProperties.defaultProperties());
+    }
+
+    public ProxyFactory(Class<?> configClass) {
+        this(ProxyProperties.create(configClass));
+    }
+
     public ProxyFactory(ProxyProperties props) {
         this.props = props;
     }
 
-    public Object interceptorProxy(Object target, InvocationInterceptor... invocationInterceptors) {
+    @SuppressWarnings("unchecked")
+    public <T> T interceptorProxy(Object target, InvocationInterceptor... invocationInterceptors) {
         var cl = Thread.currentThread().getContextClassLoader();
-        return Proxy.newProxyInstance(cl,
+        return (T) Proxy.newProxyInstance(cl,
                 target.getClass().getInterfaces(),
                 new InterceptorSupportHandler(target, props.exposeProxy(), createInterceptorList(invocationInterceptors)));
     }
@@ -29,5 +39,9 @@ public class ProxyFactory {
             interceptors.add(new AsyncInterceptor());
         }
         return interceptors;
+    }
+
+    public <T> T loggingProxy(Object target) {
+        return interceptorProxy(target, new LoggerInterceptor());
     }
 }

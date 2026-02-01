@@ -30,7 +30,7 @@ public final class MethodInvocation {
         return interceptorList.get(interceptorIndex++).intercept(this);
     }
 
-    Object invokeTargetMethod() throws Throwable {
+    private Object invokeTargetMethod() throws Throwable {
         try {
             return method.invoke(target, args);
         } catch (InvocationTargetException e) {

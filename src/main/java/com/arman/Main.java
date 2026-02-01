@@ -1,27 +1,18 @@
 package com.arman;
 
-import com.arman.impl.LoggerInterceptor;
 import com.arman.impl.SolutionImpl;
 import com.arman.proxy.ProxyFactory;
-import com.arman.proxy.ProxyProperties;
 import com.arman.proxy.annotation.ProxyConfig;
 import lombok.SneakyThrows;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Stack;
+import java.util.*;
 
 import static java.lang.System.out;
 
 @ProxyConfig(exposeProxy = true, asyncProcessingEnabled = true)
 public class Main {
-    private static final ProxyFactory proxyFactory = new ProxyFactory(ProxyProperties.create(Main.class));
-    private static final Solution SOLUTION = (Solution) proxyFactory.interceptorProxy(new SolutionImpl(), new LoggerInterceptor());
+    private static final ProxyFactory proxyFactory = new ProxyFactory(Main.class);
+    private static final Solution SOLUTION = proxyFactory.loggingProxy(new SolutionImpl());
 
     @SneakyThrows
     public static void main(String[] args) {

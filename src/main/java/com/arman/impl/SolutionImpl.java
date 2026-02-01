@@ -287,32 +287,51 @@ public class SolutionImpl implements Solution {
     @Override
     public int romanToInt(String s) {
         int res = 0;
-        char[] romanChars = s.toCharArray();
-        for (int i = romanChars.length - 1; i > -1; i--) {
-            char current = romanChars[i];
-            boolean checkPrev = i - 1 > -1;
-            int value = getNumericalValue(current);
+        int prevValue = 0;
 
-            if (checkPrev) {
-                char nextChar = romanChars[i - 1];
-                if ((current == 'V' || current == 'X') && nextChar == 'I') {
-                    value -= 1;
-                    --i;
-                }
-                if ((current == 'L' || current == 'C') && nextChar == 'X') {
-                    value -= 10;
-                    --i;
-                }
-                if ((current == 'D' || current == 'M') && nextChar == 'C') {
-                    value -= 100;
-                    --i;
-                }
+        for (int i = s.length() - 1; i >= 0; i--) {
+            int currentValue = getNumericalValue(s.charAt(i));
+            if (currentValue < prevValue) {
+                res -= currentValue;
+            } else {
+                res += currentValue;
             }
 
-            res += value;
+            prevValue = currentValue;
         }
+
         return res;
     }
+
+//    @Override
+//    public int romanToInt(String s) {
+//        int res = 0;
+//        char[] romanChars = s.toCharArray();
+//        for (int i = romanChars.length - 1; i > -1; i--) {
+//            char current = romanChars[i];
+//            boolean checkPrev = i - 1 > -1;
+//            int value = getNumericalValue(current);
+//
+//            if (checkPrev) {
+//                char prevChar = romanChars[i - 1];
+//                if ((current == 'V' || current == 'X') && prevChar == 'I') {
+//                    value -= getNumericalValue(prevChar);
+//                    --i;
+//                }
+//                if ((current == 'L' || current == 'C') && prevChar == 'X') {
+//                    value -= getNumericalValue(prevChar);
+//                    --i;
+//                }
+//                if ((current == 'D' || current == 'M') && prevChar == 'C') {
+//                    value -= getNumericalValue(prevChar);
+//                    --i;
+//                }
+//            }
+//
+//            res += value;
+//        }
+//        return res;
+//    }
 
     @Override
     public List<String> letterCombinations(String digits) {

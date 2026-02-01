@@ -4,6 +4,10 @@ import com.arman.proxy.annotation.ProxyConfig;
 
 public record ProxyProperties(boolean exposeProxy, boolean asyncProcessingEnabled) {
 
+    public static ProxyProperties defaultProperties() {
+        return new ProxyProperties(false, false);
+    }
+
     public static ProxyProperties create(Class<?> annotatedClass) {
         ProxyConfig annotation = annotatedClass.getAnnotation(ProxyConfig.class);
         if (annotation == null) {

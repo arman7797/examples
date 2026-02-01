@@ -2,8 +2,6 @@ package com.arman.context.definition;
 
 import lombok.Getter;
 
-import java.lang.reflect.Constructor;
-
 @Getter
 public class ComponentDefinition {
     private final String name;
@@ -15,6 +13,5 @@ public class ComponentDefinition {
         this.type = target;
         this.interfaces = target.getInterfaces();
     }
-
 
 }
